@@ -13,8 +13,10 @@
 #define VIA_IER     0x600e
 
 ; The timer is not really accurate as the clock cycles are influenced by the simulator
-; Set to 5000 to get a ~1ms tick. (tested under idle)
-#define T2COUNT     100
+; Set to 550 to get a ~1ms tick. (tested under idle)
+#define T2COUNT     550
+
+.global __putchar
 
 ; Initialize the system millisecond tick timer.
 .global __do_init_systick
@@ -34,6 +36,8 @@ __do_init_systick:
 .global __systick_isr
 .section .text.__systick_isr,"axR",@progbits
 __systick_isr:
+  ; lda #'s'
+  ; jsr __putchar
   lda VIA_IFR                   ; Has the T2 timer expired?
   and #$20
   beq .L__systick_isr_end

@@ -1,6 +1,18 @@
 #include <stdio.h>
 #include <6502fun.h>
 
+// bit number -> btn on via port
+// read 1 = released, 0 = pressed
+#define BTN_UP_MASK 0x10
+#define BTN_DOWN_MASK 0x80
+#define BTN_LEFT_MASK 0x20
+#define BTN_RIGHT_MASK 0x40
+#define BTN_A_MASK 0x08
+#define BTN_B_MASK 0x04
+#define BTN_SELECT_MASK 0x01
+#define BTN_START_MASK 0x02
+
+
 int main(void) {
   printf("Hello, World!\n");
   unsigned short rand = get_rand();
@@ -17,21 +29,28 @@ int main(void) {
   screen_refresh();
   char i = 0;
   while (1){
-    printf("i = %d\n", i);
-    i++;
+    {
+      unsigned char portb = via_read_port_b();
+      printf("Buttons pressed:");
+      if (!(portb & BTN_UP_MASK))     printf(" UP");
+      if (!(portb & BTN_DOWN_MASK))   printf(" DOWN");
+      if (!(portb & BTN_LEFT_MASK))   printf(" LEFT");
+      if (!(portb & BTN_RIGHT_MASK))  printf(" RIGHT");
+      if (!(portb & BTN_A_MASK))      printf(" A");
+      if (!(portb & BTN_B_MASK))      printf(" B");
+      if (!(portb & BTN_SELECT_MASK)) printf(" SELECT");
+      if (!(portb & BTN_START_MASK))  printf(" START");
+      printf("\n");
+    }
+    printf("i = %lu\n", millis());
     unsigned char portb = via_read_port_b();
     printf("PORTB: %d\n", portb);
-    // screen_draw_line(0,0,63,31,1);
-    // screen_draw_rect(24,24,6,6,1);
-    // screen_refresh();
-    // delay(100);
-    // screen_clear();
-    // screen_draw_quad(16,24,32,48,1);
-    // // screen_draw_circle(48,48,6,1);
-    // screen_refresh();
-    // screen_clear();
-
-    delay(1000);
+    screen_clear();
+    delay(10); // must wait a bit for screen to clear
+    screen_draw_line(i++ % 32,0,63,31,1);
+    screen_draw_rect(24,i % 32,6,6,1);
+    screen_refresh();
+    delay(900);
   }
   return 0;
 }
