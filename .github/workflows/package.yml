@@ -131,11 +131,6 @@ jobs:
         run: |
           cd build
           ninja doxygen
-      - name: Upload the docs to github pages.
-        if: startsWith(matrix.os, 'ubuntu')
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: build/mos-platform/html
 
       - name: Archive the Linux SDK.
         if: startsWith(matrix.os, 'ubuntu')
