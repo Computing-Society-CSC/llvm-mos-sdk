@@ -13,6 +13,15 @@ extern "C" {
 
 #define GET_RAND 0xfff0
 
+#define BTN_UP_MASK 0x10
+#define BTN_DOWN_MASK 0x80
+#define BTN_LEFT_MASK 0x20
+#define BTN_RIGHT_MASK 0x40
+#define BTN_A_MASK 0x08
+#define BTN_B_MASK 0x04
+#define BTN_SELECT_MASK 0x01
+#define BTN_START_MASK 0x02
+
 __attribute__((always_inline)) inline unsigned char get_rand() {
     return *(unsigned char *)GET_RAND;
 }
