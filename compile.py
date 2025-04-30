@@ -38,6 +38,7 @@ def main():
         # Step 2: Read and output the binary contents in the specified format
         with open("test.prg", "rb") as binary_file:
             data = binary_file.read()
+            print(f"Bytes: {len(data)}")
             hex_bytes = compress_zeros(data)
             print(f"a{hex_bytes}")
         # Step 3: Delete the file test.prg
